@@ -7,9 +7,18 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.4",
     "vite": "^8.1.5"
   },
   "dependencies": {
-    "animejs": "^4.5.0"
-  }
+    "animejs": "^4.5.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "description": "> 这是 **零到全栈 · 模块 4.1：现代前端第一步——模块化** 的配套代码——\r > 网站**模块化改造之前**的起点版本。",
+  "main": "script.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
 }
