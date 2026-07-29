@@ -1,35 +1,30 @@
+"use client";
+
+// 结果区卡片。和 4.4 一字未改。
+// 一挂载就自己淡入、把情感分数滚动归位（anime.js 的入场动画）。
+// 因为用了 useEffect / useRef / anime.js，要在浏览器里跑，所以顶上标了 "use client"。
+// （拼音、情感分数都是写死的假数据，真分析等模块 5 接后端。）
 import { useEffect, useRef } from "react";
 import { animate, scrambleText } from "animejs";
 
-// ResultCard：展示分析结果的面板组件。
-// 说明：组件在挂载时会执行入场动画（淡入 + 上移）并对显示的情感分数做一次滚动/扰动效果。
 export default function ResultCard() {
-  // cardRef：指向最外层的 article 元素，用于对整个卡片做动画。
   const cardRef = useRef(null);
-  // scoreRef：指向显示情感分数的 <strong> 元素，用于数字滚动效果。
   const scoreRef = useRef(null);
 
   useEffect(() => {
-    // 对卡片做入场动画：
-    // - opacity: [0,1] 从透明到不透明
-    // - translateY: [24,0] 从下方 24px 移动到原位
-    // - duration: 700 表示动画持续 700 毫秒（0.7 秒）
-    // - ease: "outBack" 使用带回弹的缓动效果
+    // 卡片自己淡入：.card 默认 opacity:0，这张卡负责把自己显出来
     animate(cardRef.current, {
       opacity: [0, 1],
       translateY: [24, 0],
       duration: 700,
       ease: "outBack",
     });
-
-    // 对情感分数做一个字符扰动/滚动效果，提升视觉反馈。
-    // scrambleText 会生成一个逐步变化的 innerHTML（类似数字滚动），
-    // duration: 1500 表示该效果持续 1.5 秒。
+    // 情感分数滚动归位
     animate(scoreRef.current, {
       innerHTML: scrambleText({ chars: "0-9" }),
       duration: 1500,
     });
-  }, []); // 空依赖数组 => 只在挂载时运行一次
+  }, []);
 
   return (
     <article ref={cardRef} className="panel panel-half lab-panel result-panel card">
@@ -49,7 +44,6 @@ export default function ResultCard() {
         <div className="result-grid">
           <div className="result-badge">
             <span>情感分数</span>
-            {/* data-score 用于标识这是分数显示位；ref 用于动画控制 */}
             <strong data-score ref={scoreRef}>0.86</strong>
           </div>
           <div className="result-badge">
